@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Scanlines Overlay */
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.18;
+    background: repeating-linear-gradient( to bottom, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02) 1px, transparent 2px, transparent 6px);
+    mix-blend-mode: overlay;
+}
+
+
+/* Custom helpers */
+
+.text-muted {
+    color: #9aa4c0;
+}
+
+@layer components {
+    .panel-glow {
+        @apply border bg-cyberpanel/80 border-cyberborder rounded-2xl shadow-neon;
+    }
+    /* --- SAFETY FIX: Removed complex @apply rules --- */
+    .btn-neon {
+        @apply w-full px-4 py-3 text-white border outline-none rounded-xl border-neon1/30 bg-cyberbg/50;
+    }
+    /* Using standard CSS to avoid parser errors */
+    .btn-neon:focus {
+        border-color: rgba(0, 255, 213, 0.8);
+        /* Manual neon color */
+    }
+    .input-neon {
+        @apply w-full px-4 py-3 text-white border outline-none rounded-xl border-neon1/30 bg-cyberbg/50;
+    }
+    .input-neon:focus {
+        border-color: rgba(0, 255, 213, 0.8);
+    }
+    /* ------------------------------------------------ */
+    .btn-danger {
+        @apply px-4 py-2 text-sm font-semibold text-white transition border rounded-xl border-danger/50 bg-danger/10;
+    }
+    .sidebar-link {
+        @apply block px-4 py-3 text-sm text-white transition border rounded-xl border-neon2/20 bg-cyberbg/30;
+    }
+    .sidebar-link-active {
+        @apply border-neon2/60 shadow-purple;
+    }
+    .page-title {
+        @apply mb-6 text-2xl font-black tracking-wider;
+    }
+    /* --- SAFETY FIX: Using standard CSS Grid --- */
+    .grid-cards {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        gap: 1rem;
+    }
+    /* ------------------------------------------------ */
+    .card-glow {
+        @apply relative p-5 overflow-hidden border bg-cyberbg/30 border-neon1/20 rounded-2xl shadow-neon;
+    }
+    .card-danger {
+        @apply border-danger/40 shadow-danger;
+    }
+    .scanner-box {
+        @apply relative p-5 overflow-hidden border border-neon1/20 bg-cyberbg/40 rounded-2xl;
+    }
+    .scanner-bar {
+        width: 40%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: -40%;
+        background: linear-gradient( 90deg, transparent, rgba(0, 255, 213, 0.35), transparent);
+        animation: scan 2.2s infinite;
+    }
+    .evidence-box {
+        @apply border border-neon1/20 bg-cyberbg/60 rounded-2xl p-4 text-xs text-muted overflow-auto max-h-[280px];
+    }
+    .badge {
+        @apply px-3 py-1 text-xs border rounded-full border-white/10;
+    }
+    .badge-low {
+        @apply border-neon1/30 text-neon1;
+    }
+    .badge-medium {
+        @apply border-neon1/60 text-neon1;
+    }
+    .badge-high {
+        @apply text-yellow-300 border-yellow-400/60;
+    }
+    .badge-critical {
+        @apply border-danger/70 text-danger shadow-danger;
+    }
+}
+
+
+/* Standard CSS Media Queries (Cannot be broken by Tailwind) */
+
+@media (min-width: 768px) {
+    .grid-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1280px) {
+    .grid-cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+
+/* Hover effects */
+
+.btn-neon:hover {
+    box-shadow: 0 0 18px rgba(0, 255, 213, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-danger:hover {
+    box-shadow: 0 0 18px rgba(255, 46, 99, 0.35);
+    transform: translateY(-1px);
+}
+
+.sidebar-link:hover {
+    box-shadow: 0 0 18px rgba(124, 58, 237, 0.35);
+    transform: translateX(3px);
+}
+
+@keyframes scan {
+    0% {
+        left: -40%;
+    }
+    100% {
+        left: 120%;
+    }
+}
